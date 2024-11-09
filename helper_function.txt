@@ -1,0 +1,31 @@
+# Customers table creation
+def create_customers_table():
+    c.execute('''CREATE TABLE IF NOT EXISTS Customers (
+                    C_Name VARCHAR(50) NOT NULL,
+                    C_Password VARCHAR(50) NOT NULL,
+                    C_Email VARCHAR(50) PRIMARY KEY NOT NULL,
+                    C_State VARCHAR(50) NOT NULL,
+                    C_Number VARCHAR(50) NOT NULL
+                )''')
+    conn.commit()
+
+# Add a new customer
+def add_customer(name, password, email, state, number):
+    c.execute('''INSERT INTO Customers (C_Name, C_Password, C_Email, C_State, C_Number) 
+                 VALUES (?, ?, ?, ?, ?)''', (name, password, email, state, number))
+    conn.commit()
+
+# View all customers
+def view_customers():
+    c.execute('SELECT * FROM Customers')
+    return c.fetchall()
+
+# Update a customer’s phone number
+def update_customer_number(email, number):
+    c.execute('''UPDATE Customers SET C_Number = ? WHERE C_Email = ?''', (number, email))
+    conn.commit()
+
+# Delete a customer
+def delete_customer(email):
+    c.execute('''DELETE FROM Customers WHERE C_Email = ?''', (email,))
+    conn.commit()

@@ -1,0 +1,25 @@
+## CUSTOMERS
+    elif choice == "Customers":
+
+        menu = ["View", "Update", "Delete"]
+        choice = st.sidebar.selectbox("Menu", menu)
+        if choice == "View":
+            st.subheader("Customer Details")
+            cust_result = customer_view_all_data()
+            #st.write(cust_result)
+            with st.expander("View All Customer Data"):
+                cust_clean_df = pd.DataFrame(cust_result, columns=["Name", "Password","Email-ID" ,"Area", "Number"])
+                st.dataframe(cust_clean_df)
+
+        if choice == 'Update':
+            st.subheader("Update Customer Details")
+            cust_email = st.text_area("Email")
+            cust_number = st.text_area("Phone Number")
+            if st.button(label='Update'):
+                customer_update(cust_email,cust_number)
+
+        if choice == 'Delete':
+            st.subheader("Delete Customer")
+            cust_email = st.text_area("Email")
+            if st.button(label="Delete"):
+                customer_delete(cust_email)

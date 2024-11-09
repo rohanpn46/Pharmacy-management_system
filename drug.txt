@@ -1,0 +1,49 @@
+## DRUGS
+    if choice == "Drugs":
+
+        menu = ["Add", "View", "Update", "Delete"]
+        choice = st.sidebar.selectbox("Menu", menu)
+        if choice == "Add":
+
+            st.subheader("Add Drugs")
+
+            col1, col2 = st.columns(2)
+
+            with col1:
+                drug_name = st.text_area("Enter the Drug Name")
+                drug_expiry = st.date_input("Expiry Date of Drug (YYYY-MM-DD)")
+                drug_mainuse = st.text_area("When to Use")
+            with col2:
+                drug_quantity = st.text_area("Enter the quantity")
+                drug_id = st.text_area("Enter the Drug id (example:#D1)")
+
+            if st.button("Add Drug"):
+                drug_add_data(drug_name,drug_expiry,drug_mainuse,drug_quantity,drug_id)
+                st.success("Successfully Added Data")
+        if choice == "View":
+            st.subheader("Drug Details")
+            drug_result = drug_view_all_data()
+            #st.write(drug_result)
+            with st.expander("View All Drug Data"):
+                drug_clean_df = pd.DataFrame(drug_result, columns=["Name", "Expiry Date", "Use", "Quantity", "ID"])
+                st.dataframe(drug_clean_df)
+            with st.expander("View Drug Quantity"):
+                drug_name_quantity_df = drug_clean_df[['Name','Quantity']]
+                #drug_name_quantity_df = drug_name_quantity_df.reset_index()
+                st.dataframe(drug_name_quantity_df)
+        if choice == 'Update':
+            st.subheader("Update Drug Details")
+            d_id = st.text_area("Drug ID")
+            d_use = st.text_area("Drug Use")
+            if st.button(label='Update'):
+                drug_update(d_use,d_id)
+
+        if choice == 'Delete':
+            st.subheader("Delete Drugs")
+            did = st.text_area("Drug ID")
+            if st.button(label="Delete"):
+                drug_delete(did)
+
+
+
+    

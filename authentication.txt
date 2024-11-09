@@ -1,0 +1,9 @@
+def getauthenicate(username, password):
+    c.execute('SELECT C_Password FROM Customers WHERE C_Name = ?', (username,))
+    cust_password = c.fetchall()
+    
+    # Check if any result is returned
+    if cust_password and cust_password[0][0] == password:
+        return True
+    else:
+        return False

@@ -1,0 +1,62 @@
+       if st.button(label="Buy now"):
+            O_items = ""
+
+            if int(dolo650) > 0:
+                O_items += "Dolo-650,"
+            if int(strepsils) > 0:
+                O_items += "Strepsils,"
+            if int(vicks) > 0:
+                O_items += "Vicks"
+            O_Qty = str(dolo650)+str(',') + str(strepsils) + str(",") + str(vicks)
+
+            O_id = username + "#O" + str(random.randint(0,1000000))
+            #order_add_data(O_Name, O_Items,O_Qty, O_id):
+            order_add_data(username, O_items, O_Qty, O_id)
+
+
+
+
+
+
+
+
+if __name__ == '__main__':
+    drug_create_table()
+    cust_create_table()
+    order_create_table()
+
+    menu = ["Login", "SignUp","Admin"]
+    choice = st.sidebar.selectbox("Menu", menu)
+    if choice == "Login":
+        username = st.sidebar.text_input("User Name")
+        password = st.sidebar.text_input("Password", type='password')
+        if st.sidebar.checkbox(label="Login"):
+            customer(username, password)
+
+    elif choice == "SignUp":
+        st.subheader("Create New Account")
+        cust_name = st.text_input("Name")
+        cust_password = st.text_input("Password", type='password', key=1000)
+        cust_password1 = st.text_input("Confirm Password", type='password', key=1001)
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            cust_email = st.text_area("Email ID")
+        with col2:
+            cust_area = st.text_area("State")
+        with col3:
+            cust_number = st.text_area("Phone Number")
+
+        if st.button("Signup"):
+            if (cust_password == cust_password1):
+                customer_add_data(cust_name,cust_password,cust_email, cust_area, cust_number,)
+                st.success("Account Created!")
+                st.info("Go to Login Menu to login")
+            else:
+                st.warning('Password dont match')
+    elif choice == "Admin":
+        username = st.sidebar.text_input("User Name")
+        password = st.sidebar.text_input("Password", type='password')
+        # if st.sidebar.button("Login"):
+        if username == 'admin' and password == 'admin':
+            admin()
